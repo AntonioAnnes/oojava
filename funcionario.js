@@ -1,71 +1,59 @@
-function Pessoa(nome) {
+class Pessoa {
+
+    constructor(nome) {
     this.nome = nome;
-    this.dizOi = function() {
-        console.log(this.nome + " diz olá");
     }
-    this.dizCargo = function() {
-        console.log(this.cargo);
+    dizOi() {
+        console.log(this.nome + " diz olá");   
+    }
+    dizCargo() {
+    console.log(this.cargo);
     }
 }
-
-function Funcionario(nome, cargo, salario) {
+    class Funcionario extends Pessoa {
+    constructor(nome, cargo, salario) {
+    super(nome);
     this.cargo = cargo;
-    // this.salario = salario;
-    let _salario = salario;
+    this.salario = salario;
 
-    // getters e setters;
-    this.getSalario = function() {
-        return _salario;
     }
-
-    this.SetSalario = function(valor) {
-        if (typeof valor === 'number') {
-            _salario = valor;
-        }
+    aumento() {
+     const novoSalario = this.salario * 1.1;
+    this.salario = novoSalario;
     }
-
-    this.aumento = function() {
-        const novoSalario = _salario *1.1;
-        _salario = novoSalario;
+    dizCargo() {
+    console.log(this.cargo);
     }
-
-    this.dizCargo = function() {
-        console.log(this.cargo);
-    }
-
-    Pessoa.call(this, nome);
 }
+class Estagiario extends Funcionario {
+    constructor(nome) {
+    super(nome, "Estagiário", 2000);
+    }
+    aumento() {
+     const novoSalario = this.salario * 1.07;
+    this.salario = novoSalario;
+    }
+}
+    class Gerente extends Funcionario {
+    constructor(nome) {
+    super(nome, "Gerente", 10000);
+    }
+    aumento() {
+     const novoSalario = this.salario * 1.15;
+    this.salario = novoSalario;
 
-function Estagiario(nome) {
-    Funcionario.call(this, nome, "Estagiario", 2000);
-
-    this.aumento = function() {
-        const novoSalario = this.getSalario() *1.07;
-        this.SetSalario(novoSalario);
     }
 }
 
-function Gerente(nome) {
-    Funcionario.call(this, nome, "Gerente", 10000);
+    const funcionario1 = new Funcionario("Maria", "dev front-end", 5000);
+    const funcionario2 = new Estagiario("Pedro");
+    const funcionario3 = new Gerente("Paula");
 
-    this.aumento = function() {
-        const novoSalario = this.getSalario() *1.15;
-        this.SetSalario(novoSalario);
-    }
-}
+    funcionario1.aumento();
+    console.log(funcionario1.salario);
 
+    funcionario2.aumento();
+    console.log(funcionario2.salario);
 
-const funcionario1 = new Funcionario("Maria", "dev front-end", 5000);
-const funcionario2 = new Estagiario("Pedro");
-const funcionario3 = new Gerente("Paula");
-
-funcionario1.aumento();
-console.log(funcionario1.getSalario())
-
-
-funcionario2.aumento();
-console.log(funcionario2.getSalario())
-
-funcionario3.aumento();
-console.log(funcionario3.getSalario())
-
+    funcionario3.aumento();
+    console.log(funcionario3.salario);
